@@ -14,7 +14,7 @@ def test_get_locations_for_us_90210_check_status_code_equals_200():
 # Check that the value of the response header 'Content-Type' equals 'application/json'
 def test_get_locations_for_us_90210_check_content_type_equals_json():
     response = requests.get("http://api.zippopotam.us/us/90210")
-    assert response.headers['Content-Type'] == "application/json"
+    assert response.headers["Content-Type"] == "application/json"
 
 
 # Exercise 1.3

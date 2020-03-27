@@ -13,7 +13,7 @@ def create_post():
     return {
         "title": "The title of my new post",
         "body": "A very long string containing the body of my new post",
-        "userId": 1
+        "userId": 1,
     }
 
 
@@ -24,7 +24,9 @@ def create_post():
 # and that the new post id returned by the API is an integer
 # Use the isinstance(variable, type) function for this (Google is your friend!)
 def test_send_post_check_status_code_is_200_and_id_is_integer():
-    response = requests.post("https://jsonplaceholder.typicode.com/posts", json=create_post())
+    response = requests.post(
+        "https://jsonplaceholder.typicode.com/posts", json=create_post()
+    )
     assert response.status_code == 201
     assert isinstance(response.json()["id"], int) is True
 
@@ -51,10 +53,10 @@ def create_billpay_for(name):
             "street": "My street",
             "city": "My city",
             "state": "My state",
-            "zipCode": "90210"
+            "zipCode": "90210",
         },
         "phoneNumber": "0123456789",
-        "accountNumber": 12345
+        "accountNumber": 12345,
     }
 
 
@@ -68,6 +70,10 @@ def create_billpay_for(name):
 def test_payee_name_ends_up_in_response_body():
     my_name = "John Smith"
     json_object = create_billpay_for(my_name)
-    response = requests.post("http://parabank.parasoft.com/parabank/services/bank/billpay?accountId=12345&amount=500", headers={"Accept": "application/json"}, json=json_object)
+    response = requests.post(
+        "http://parabank.parasoft.com/parabank/services/bank/billpay?accountId=12345&amount=500",
+        headers={"Accept": "application/json"},
+        json=json_object,
+    )
     assert response.status_code == 200
     assert response.json()["payeeName"] == my_name

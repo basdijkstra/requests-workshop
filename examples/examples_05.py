@@ -3,7 +3,9 @@ import requests
 
 
 def test_check_root_of_xml_response():
-    response = requests.get("http://parabank.parasoft.com/parabank/services/bank/customers/12212")
+    response = requests.get(
+        "http://parabank.parasoft.com/parabank/services/bank/customers/12212"
+    )
     response_body_as_xml = et.fromstring(response.content)
     xml_tree = et.ElementTree(response_body_as_xml)
     root = xml_tree.getroot()
@@ -12,7 +14,9 @@ def test_check_root_of_xml_response():
 
 
 def test_check_specific_element_of_xml_response():
-    response = requests.get("http://parabank.parasoft.com/parabank/services/bank/customers/12212")
+    response = requests.get(
+        "http://parabank.parasoft.com/parabank/services/bank/customers/12212"
+    )
     response_body_as_xml = et.fromstring(response.content)
     xml_tree = et.ElementTree(response_body_as_xml)
     first_name = xml_tree.find("firstName")
@@ -22,7 +26,9 @@ def test_check_specific_element_of_xml_response():
 
 # https://docs.python.org/3/library/xml.etree.elementtree.html#elementtree-xpath
 def test_use_xpath_for_more_sophisticated_checks():
-    response = requests.get("http://parabank.parasoft.com/parabank/services/bank/customers/12212")
+    response = requests.get(
+        "http://parabank.parasoft.com/parabank/services/bank/customers/12212"
+    )
     response_body_as_xml = et.fromstring(response.content)
     xml_tree = et.ElementTree(response_body_as_xml)
     address_children = xml_tree.findall(".//address/*")

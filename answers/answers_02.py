@@ -10,7 +10,7 @@ import pytest, requests, csv
 test_data_zip = [
     ("us", "90210", "Beverly Hills"),
     ("it", "50123", "Firenze"),
-    ("ca", "Y1A", "Whitehorse")
+    ("ca", "Y1A", "Whitehorse"),
 ]
 
 
@@ -21,9 +21,10 @@ test_data_zip = [
 # to those that are specified in the test data object
 @pytest.mark.parametrize("country_code, zip_code, expected_place", test_data_zip)
 def test_get_location_data_check_place_name(country_code, zip_code, expected_place):
-    response = requests.get(f'http://api.zippopotam.us/{country_code}/{zip_code}')
+    response = requests.get(f"http://api.zippopotam.us/{country_code}/{zip_code}")
     response_body = response.json()
     assert response_body["places"][0]["place name"] == expected_place
+
 
 # Exercise 2.3
 # Create the same test data as above, but now in a .csv file, for example:
@@ -38,8 +39,8 @@ def test_get_location_data_check_place_name(country_code, zip_code, expected_pla
 # and creates and returns a test data object from the data in the .csv file
 def read_data_from_csv():
     test_data_zip_from_csv = []
-    with open("answers/test_data_zip.csv", newline='') as csvfile:
-        data = csv.reader(csvfile, delimiter=',')
+    with open("answers/test_data_zip.csv", newline="") as csvfile:
+        data = csv.reader(csvfile, delimiter=",")
         for row in data:
             test_data_zip_from_csv.append(row)
     return test_data_zip_from_csv
@@ -49,7 +50,9 @@ def read_data_from_csv():
 # Change the data driven test from Exercise 2.2 so that it uses the test data
 # from the .csv file instead of the test data that was hard coded in this file
 @pytest.mark.parametrize("country_code, zip_code, expected_place", read_data_from_csv())
-def test_get_location_data_check_place_name_with_data_from_csv(country_code, zip_code, expected_place):
-    response = requests.get(f'http://api.zippopotam.us/{country_code}/{zip_code}')
+def test_get_location_data_check_place_name_with_data_from_csv(
+    country_code, zip_code, expected_place
+):
+    response = requests.get(f"http://api.zippopotam.us/{country_code}/{zip_code}")
     response_body = response.json()
     assert response_body["places"][0]["place name"] == expected_place

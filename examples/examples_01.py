@@ -8,7 +8,7 @@ def test_get_user_with_id_1_check_status_code_equals_200():
 
 def test_get_user_with_id_1_check_content_type_equals_json():
     response = requests.get("https://jsonplaceholder.typicode.com/users/1")
-    assert response.headers['Content-Type'] == "application/json; charset=utf-8"
+    assert response.headers["Content-Type"] == "application/json; charset=utf-8"
 
 
 def test_get_user_with_id_1_check_encoding_equals_utf8():

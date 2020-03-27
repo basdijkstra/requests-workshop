@@ -13,7 +13,7 @@ def create_json_object():
                     "id": unique_number,
                     "name": "John Smith",
                     "phone_1": "0612345678",
-                    "phone_2": "0992345678"
+                    "phone_2": "0992345678",
                 }
             }
         ]

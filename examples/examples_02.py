@@ -2,11 +2,7 @@ import pytest
 import requests
 import csv
 
-test_data_users = [
-    (1, "Leanne Graham"),
-    (2, "Ervin Howell"),
-    (3, "Clementine Bauch")
-]
+test_data_users = [(1, "Leanne Graham"), (2, "Ervin Howell"), (3, "Clementine Bauch")]
 
 
 @pytest.mark.parametrize("userid, expected_name", test_data_users)
@@ -18,8 +14,8 @@ def test_get_data_for_user_check_name(userid, expected_name):
 
 def read_data_from_csv():
     test_data_users_from_csv = []
-    with open("examples/test_data_users.csv", newline='') as csvfile:
-        data = csv.reader(csvfile, delimiter=',')
+    with open("examples/test_data_users.csv", newline="") as csvfile:
+        data = csv.reader(csvfile, delimiter=",")
         for row in data:
             test_data_users_from_csv.append(row)
     return test_data_users_from_csv
