@@ -15,13 +15,9 @@ from urllib.parse import urlparse
 @responses.activate
 def test_get_data_for_us_90210_mock_returns_404():
 
-    responses.add(
-        responses.GET,
-        'http://api.zippopotam.us/us/90210',
-        status=404
-    )
+    responses.add(responses.GET, "http://api.zippopotam.us/us/90210", status=404)
 
-    response = requests.get('http://api.zippopotam.us/us/90210')
+    response = requests.get("http://api.zippopotam.us/us/90210")
     assert response.status_code == 404
 
 
@@ -39,13 +35,13 @@ def test_get_user_with_id_1_mock_returns_404_and_error_message_in_body():
 
     responses.add(
         responses.GET,
-        'http://api.zippopotam.us/us/90210',
-        json={'error': 'No data exists for US zip code 90210'},
-        status=404
+        "http://api.zippopotam.us/us/90210",
+        json={"error": "No data exists for US zip code 90210"},
+        status=404,
     )
 
     response = requests.get("http://api.zippopotam.us/us/90210")
-    assert response.json()['error'] == 'No data exists for US zip code 90210'
+    assert response.json()["error"] == "No data exists for US zip code 90210"
 
 
 # Exercise 6.3
@@ -61,13 +57,13 @@ def test_responses_can_raise_error_on_demand():
 
     responses.add(
         responses.GET,
-        'http://api.zippopotam.us/us/ABCDE',
-        body=ValueError('US uses numerical zip codes only')
+        "http://api.zippopotam.us/us/ABCDE",
+        body=ValueError("US uses numerical zip codes only"),
     )
 
     with pytest.raises(ValueError) as ve:
-        requests.get('http://api.zippopotam.us/us/ABCDE')
-    assert str(ve.value) == 'US uses numerical zip codes only'
+        requests.get("http://api.zippopotam.us/us/ABCDE")
+    assert str(ve.value) == "US uses numerical zip codes only"
 
 
 # Exercise 6.4
@@ -95,25 +91,28 @@ test_data_zip = [
 #   expected output. Perform a GET call to http://api.zippopotam.us/<country_code>/<zip_code>
 #   and check that the response body element 'value' has a value equal to
 #   '<country_code> zip code <zip_code> corresponds to <place>'.
-@pytest.mark.parametrize('country_code, zip_code, place', test_data_zip)
+@pytest.mark.parametrize("country_code, zip_code, place", test_data_zip)
 @responses.activate
 def test_using_a_callback_for_dynamic_responses(country_code, zip_code, place):
-
     def request_callback(request):
         request_url = request.url
-        resp_body = {'value': generate_response_from(request_url)}
+        resp_body = {"value": generate_response_from(request_url)}
         return 200, {}, json.dumps(resp_body)
 
     responses.add_callback(
-        responses.GET, f'http://api.zippopotam.us/{country_code}/{zip_code}',
+        responses.GET,
+        f"http://api.zippopotam.us/{country_code}/{zip_code}",
         callback=request_callback,
-        content_type='application/json',
+        content_type="application/json",
     )
 
     def generate_response_from(url):
         parsed_url = urlparse(url).path
-        split_url = parsed_url.split('/')
-        return f'{split_url[-2]} zip code {split_url[-1]} corresponds to {place}'
+        split_url = parsed_url.split("/")
+        return f"{split_url[-2]} zip code {split_url[-1]} corresponds to {place}"
 
-    response = requests.get(f'http://api.zippopotam.us/{country_code}/{zip_code}')
-    assert response.json()['value'] == f'{country_code} zip code {zip_code} corresponds to {place}'
+    response = requests.get(f"http://api.zippopotam.us/{country_code}/{zip_code}")
+    assert (
+        response.json()["value"]
+        == f"{country_code} zip code {zip_code} corresponds to {place}"
+    )
