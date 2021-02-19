@@ -38,7 +38,7 @@ import requests
 
 # Exercise 3.4
 # Write a test that POSTs the object created in 3.3 to
-# http://parabank.parasoft.com/parabank/services/bank/billpay?accountId=12345&amount=500
+# https://parabank.parasoft.com/parabank/services/bank/billpay?accountId=12345&amount=500
 # Supply a name of your own choice to the create_billpay_for() method
 # Make sure that the request header 'Accept' has value 'application/json' (Google ;)
 # Check that the response status code is 200 and
