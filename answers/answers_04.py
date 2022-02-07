@@ -35,13 +35,13 @@ def create_xml_body_from_string():
 
 # Exercise 4.2
 # Write a test that POSTs the object created in 4.1
-# to http://parabank.parasoft.com/parabank/services/bank/billpay?accountId=12345&amount=500
+# to https://parabank.parasoft.com/parabank/services/bank/billpay?accountId=12345&amount=500
 # Set the request header 'Content-Type' to 'application/xml'
 # Then check that the response status code is 200
 # and that the value of the response header 'Content-Type' is also equal to 'application/xml'
 def test_send_xml_body_from_docstring_check_status_code_is_200_and_name_is_correct():
     response = requests.post(
-        "http://parabank.parasoft.com/parabank/services/bank/billpay?accountId=12345&amount=500",
+        "https://parabank.parasoft.com/parabank/services/bank/billpay?accountId=12345&amount=500",
         headers={"Content-Type": "application/xml"},
         data=create_xml_body_from_string(),
     )
@@ -81,7 +81,7 @@ def test_send_xml_body_from_elementtree_check_status_code_is_200_and_name_is_cor
     xml = create_xml_body_using_elementtree()
     xml_as_string = et.tostring(xml)
     response = requests.post(
-        "http://parabank.parasoft.com/parabank/services/bank/billpay?accountId=12345&amount=500",
+        "https://parabank.parasoft.com/parabank/services/bank/billpay?accountId=12345&amount=500",
         headers={"Content-Type": "application/xml"},
         data=xml_as_string,
     )

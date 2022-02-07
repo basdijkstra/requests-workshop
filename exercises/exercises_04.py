@@ -21,7 +21,7 @@ import xml.etree.ElementTree as et
 
 # Exercise 4.2
 # Write a test that POSTs the object created in 4.1
-# to http://parabank.parasoft.com/parabank/services/bank/billpay?accountId=12345&amount=500
+# to https://parabank.parasoft.com/parabank/services/bank/billpay?accountId=12345&amount=500
 # Set the request header 'Content-Type' to 'application/xml'
 # Then check that the response status code is 200
 # and that the value of the response header 'Content-Type' is also equal to 'application/xml'
