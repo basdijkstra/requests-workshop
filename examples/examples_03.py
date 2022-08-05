@@ -1,26 +1,21 @@
 import requests
-import uuid
-
-unique_number = str(uuid.uuid4())  # e.g. 5b4832b4-da4c-48b2-8512-68fb49b69de1
+import random
 
 
-def create_json_object():
+def create_new_post_object():
 
     return {
-        "users": [
-            {
-                "user": {
-                    "id": unique_number,
-                    "name": "John Smith",
-                    "phone_1": "0612345678",
-                    "phone_2": "0992345678",
-                }
-            }
-        ]
+        "name": "John Smith",
+        "address": {
+            "street": "Main Street",
+            "number": random.randint(1000, 9999),
+            "zipCode": 90210,
+            "city": "Beverly Hills"
+        }
     }
 
 
 def test_send_json_with_unique_number_check_status_code():
-    response = requests.post("http://httpbin.org/post", json=create_json_object())
+    response = requests.post("https://postman-echo.com/post", json=create_new_post_object())
     print(response.request.body)
     assert response.status_code == 200
