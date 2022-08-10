@@ -16,7 +16,7 @@ unique_number = str(uuid.uuid4())
 
 def use_xml_string_block():
 
-    return """
+    return '''
     <users>
         <user>
             <id>5b4832b4-da4c-48b2-8512-68fb49b69de1</id>
@@ -25,7 +25,7 @@ def use_xml_string_block():
             <phone type="landline">0992345678</phone>
         </user>
     </users>    
-    """
+    '''
 
 
 def create_xml_object():
@@ -46,15 +46,13 @@ def create_xml_object():
 
 
 def test_send_xml_using_xml_string_block():
-    xml = use_xml_string_block()
-    response = requests.post("http://httpbin.org/anything", data=xml)
+    response = requests.post("http://httpbin.org/anything", data=use_xml_string_block())
     print(response.request.body)
     assert response.status_code == 200
 
 
 def test_send_xml_using_element_tree():
     xml = create_xml_object()
-    xml_as_string = et.tostring(xml)
-    response = requests.post("http://httpbin.org/anything", data=xml_as_string)
+    response = requests.post("http://httpbin.org/anything", data=et.tostring(xml))
     print(response.request.body)
     assert response.status_code == 200
