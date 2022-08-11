@@ -1,5 +1,6 @@
+from lxml import etree
+
 import requests
-import xml.etree.ElementTree as et
 
 
 # Exercise 4.1

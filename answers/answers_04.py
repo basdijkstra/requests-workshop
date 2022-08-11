@@ -1,5 +1,6 @@
+from lxml import etree
+
 import requests
-import xml.etree.ElementTree as et
 
 
 # Exercise 4.1
@@ -52,24 +53,24 @@ def test_send_xml_body_from_docstring_check_status_code_is_200_and_name_is_corre
 # Exercise 4.3
 # Write a method create_xml_body_using_elementtree() that returns
 # the same request body as in Exercise 4.1, but now uses the
-# ElementTree library (I've imported that for you already, it's available as 'et')
+# etree library from lxml (I've imported that for you already, it's available as 'etree')
 # Make your life a little easier by specifying all element values as strings
 def create_xml_body_using_elementtree():
-    payee = et.Element("payee")
-    name = et.SubElement(payee, "name")
+    payee = etree.Element("payee")
+    name = etree.SubElement(payee, "name")
     name.text = "John Smith"
-    address = et.SubElement(payee, "address")
-    street = et.SubElement(address, "street")
+    address = etree.SubElement(payee, "address")
+    street = etree.SubElement(address, "street")
     street.text = "My street"
-    city = et.SubElement(address, "city")
+    city = etree.SubElement(address, "city")
     city.text = "My city"
-    state = et.SubElement(address, "state")
+    state = etree.SubElement(address, "state")
     state.text = "My state"
-    zip_code = et.SubElement(address, "zipCode")
+    zip_code = etree.SubElement(address, "zipCode")
     zip_code.text = "90210"
-    phone_number = et.SubElement(payee, "phoneNumber")
+    phone_number = etree.SubElement(payee, "phoneNumber")
     phone_number.text = "0123456789"
-    account_number = et.SubElement(payee, "accountNumber")
+    account_number = etree.SubElement(payee, "accountNumber")
     account_number.text = "12345"
     return payee
 
@@ -79,7 +80,7 @@ def create_xml_body_using_elementtree():
 # Don't forget to convert the XML document to a string before sending it!
 def test_send_xml_body_from_elementtree_check_status_code_is_200_and_name_is_correct():
     xml = create_xml_body_using_elementtree()
-    xml_as_string = et.tostring(xml)
+    xml_as_string = etree.tostring(xml)
     response = requests.post(
         "https://parabank.parasoft.com/parabank/services/bank/billpay?accountId=12345&amount=500",
         headers={"Content-Type": "application/xml"},
