@@ -52,8 +52,8 @@ def test_send_xml_using_xml_string_block():
     assert response.status_code == 200
 
 
-def test_send_xml_using_element_tree():
+def test_send_xml_using_lxml_etree():
     xml = create_xml_object()
-    response = requests.post("http://httpbin.org/anything", data=et.tostring(xml))
+    response = requests.post("http://httpbin.org/anything", data=etree.tostring(xml))
     print(response.request.body)
     assert response.status_code == 200
