@@ -12,6 +12,8 @@ What API is used for the exercises?
 ---
 The exercises use the [Zippopotam.us API](http://api.zippopotam.us/), so make sure that it's up and that you are allowed to access it from your machine.
 
+The same goes for the [SpaceX GraphQL API](https://api.spacex.land/graphql/) that is used in the sixth and final series of exercises.
+
 Slides
 ---
 The .pptx/.pdf/.odp file in the root folder contains all slides from the workshop. Again, feel free to use, share and adapt them to fit your own requirements.
