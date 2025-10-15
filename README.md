@@ -1,6 +1,6 @@
 Workshop: Testing RESTful APIs in Python with requests
 ==================
-For those of you looking to gain some experience working with [requests](https://requests.readthedocs.io/en/master/), here are all the materials from a workshop I've created and delivered multiple times to good reviews. Feel free to use, share and adapt these materials as you see fit.
+For those of you looking to gain some experience working with [requests](https://requests.readthedocs.io/en/latest/), here are all the materials from a workshop I've created and delivered multiple times to good reviews. Feel free to use, share and adapt these materials as you see fit.
 
 Setting up your system
 ---
