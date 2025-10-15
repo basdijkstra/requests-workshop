@@ -21,7 +21,7 @@ test_data_zip = [
 # to those that are specified in the test data object
 @pytest.mark.parametrize("country_code, zip_code, expected_place", test_data_zip)
 def test_get_location_data_check_place_name(country_code, zip_code, expected_place):
-    response = requests.get(f"http://api.zippopotam.us/{country_code}/{zip_code}")
+    response = requests.get(f"https://api.zippopotam.us/{country_code}/{zip_code}")
     response_body = response.json()
     assert response_body["places"][0]["place name"] == expected_place
 
@@ -53,6 +53,6 @@ def read_data_from_csv():
 def test_get_location_data_check_place_name_with_data_from_csv(
     country_code, zip_code, expected_place
 ):
-    response = requests.get(f"http://api.zippopotam.us/{country_code}/{zip_code}")
+    response = requests.get(f"https://api.zippopotam.us/{country_code}/{zip_code}")
     response_body = response.json()
     assert response_body["places"][0]["place name"] == expected_place

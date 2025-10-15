@@ -11,7 +11,7 @@ import pytest, requests, csv
 
 # Exercise 2.2
 # Write a parameterized test that retrieves user data using
-# a GET call to http://api.zippopotam.us/<country_code>/<zip_code>
+# a GET call to https://api.zippopotam.us/<country_code>/<zip_code>
 # and checks that the values for the 'place name' elements correspond
 # to those that are specified in the test data object
 
