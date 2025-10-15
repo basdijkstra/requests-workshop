@@ -1,0 +1,37 @@
+name: Run the tests
+
+on:
+    push:
+      branches:
+        - main
+    pull_request:
+
+jobs:
+  run-the-tests:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.12", "3.13", "3.14"]
+
+    steps:        
+      - name: Checkout latest code from GitHub
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+            python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      
+      - name: Run Answers 01
+        run: pytest ./answers/answers_01.py
+
+      - name: Run Answers 02
+        run: pytest ./answers/answers_02.py
+
+      - name: Run Answers 03
+        run: pytest ./answers/answers_03.py
