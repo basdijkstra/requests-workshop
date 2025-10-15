@@ -35,3 +35,6 @@ jobs:
 
       - name: Run Answers 03
         run: pytest ./answers/answers_03.py
+
+      - name: Run Answers 04
+        run: pytest ./answers/answers_04.py

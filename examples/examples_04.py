@@ -1,59 +1,58 @@
-from lxml import etree
-
 import requests
-import uuid
+import pytest
 
-unique_number = str(uuid.uuid4())
-
-# <users>
-# 	<user>
-# 		<id>5b4832b4-da4c-48b2-8512-68fb49b69de1</id>
-# 		<name>John Smith</name>
-# 		<phone type="mobile">0612345678</phone>
-# 		<phone type="landline">0992345678</phone>
-# 	</user>
-# </users>
-
-
-def use_xml_string_block():
-
-    return '''
-    <users>
-        <user>
-            <id>5b4832b4-da4c-48b2-8512-68fb49b69de1</id>
-            <name>John Smith</name>
-            <phone type="mobile">0612345678</phone>
-            <phone type="landline">0992345678</phone>
-        </user>
-    </users>    
-    '''
+query_weather_in_amsterdam = """
+{
+  getCityByName(name: "Amsterdam") {
+    weather {
+      summary {
+        title
+      }
+    }
+  }
+}
+"""
 
 
-def create_xml_object():
-    users = etree.Element("users")
-    user = etree.SubElement(users, "user")
-    user_id = etree.SubElement(user, "id")
-    user_id.text = unique_number
-    name = etree.SubElement(user, "name")
-    name.text = "John Smith"
-    phone1 = etree.SubElement(user, "phone")
-    phone1.set("type", "mobile")
-    phone1.text = "0612345678"
-    phone2 = etree.SubElement(user, "phone")
-    phone2.set("type", "landline")
-    phone2.text = "0992345678"
-
-    return users
-
-
-def test_send_xml_using_xml_string_block():
-    response = requests.post("http://httpbin.org/anything", data=use_xml_string_block())
-    print(response.request.body)
+def test_get_weather_for_amsterdam_should_be_clear():
+    response = requests.post(
+        "https://graphql-weather-api.herokuapp.com/",
+        json={'query': query_weather_in_amsterdam}
+    )
     assert response.status_code == 200
+    response_body = response.json()
+    assert response_body['data']['getCityByName']['weather']['summary']['title'] == 'Clear'
 
 
-def test_send_xml_using_lxml_etree():
-    xml = create_xml_object()
-    response = requests.post("http://httpbin.org/anything", data=etree.tostring(xml))
-    print(response.request.body)
+query_weather_parameterized = """
+query getWeather($city: String!)
+{
+  getCityByName(name: $city) {
+    weather {
+      summary {
+        title
+      }
+    }
+  }
+}
+"""
+
+test_data_weather = [
+    ('Amsterdam', 'Clear'),
+    ('Berlin', 'Clear'),
+    ('Sydney', 'Rain')
+]
+
+
+@pytest.mark.parametrize('city_name, expected_weather', test_data_weather)
+def test_get_weather_for_city_should_be_as_expected(city_name, expected_weather):
+    response = requests.post(
+        "https://graphql-weather-api.herokuapp.com/",
+        json={'query': query_weather_parameterized,
+              'variables': {
+                  'city': city_name
+              }}
+    )
     assert response.status_code == 200
+    response_body = response.json()
+    assert response_body['data']['getCityByName']['weather']['summary']['title'] == expected_weather

@@ -1,40 +1,41 @@
-from lxml import etree
-
 import requests
+import pytest
 
 
 # Exercise 4.1
-# Create a function create_xml_body_from_string()
-# that returns a docstring (with triple double quotes)
-# containing the following XML document:
-# <payee>
-#     <name>John Smith</name>
-#     <address>
-#         <street>My street</street>
-#         <city>My city</city>
-#         <state>My state</state>
-#         <zipCode>90210</zipCode>
-#     </address>
-#     <phoneNumber>0123456789</phoneNumber>
-#     <accountNumber>12345</accountNumber>
-# </payee>
+# Create a new GraphQL query as a String with value { company { name ceo coo } }
+# POST this object to https://api.spacex.land/graphql/
+# Assert that the name of the CEO is Elon Musk
+# The name can be found using ['data']['company']['ceo']
 
 
 # Exercise 4.2
-# Write a test that POSTs the object created in 4.1
-# to https://parabank.parasoft.com/parabank/services/bank/billpay?accountId=12345&amount=500
-# Set the request header 'Content-Type' to 'application/xml'
-# Then check that the response status code is 200
-# and that the value of the response header 'Content-Type' is also equal to 'application/xml'
+# Create a test data source (a list of test data tuples)
+# containing the following test data:
+# --------------------------------------------------------------------------
+# rocket id                | rocket name  | country
+# --------------------------------------------------------------------------
+# 5e9d0d95eda69955f709d1eb | Falcon 1     | Republic of the Marshall Islands
+# 5e9d0d95eda69974db09d1ed | Falcon Heavy | United States
+# 5e9d0d96eda699382d09d1ee | Starship     | United States
 
 
 # Exercise 4.3
-# Write a method create_xml_body_using_elementtree() that returns
-# the same request body as in Exercise 4.1, but now uses the
-# ElementTree library (I've imported that for you already, it's available as 'et')
-# Make your life a little easier by specifying all element values as strings
-
-
-# Exercise 4.4
-# Repeat Exercise 4.2, but now use the XML document created in Exercise 4.3
-# Don't forget to convert the XML document to a string before sending it!
+# Write a test that POSTs the given parameterized GraphQL query to
+# https://api.spacex.land/graphql, together with the rocket id as
+# the value for the id variable, for all test cases in the test data source.
+#
+# Assert that the name of the rocket is equal to the value in the data source
+# Use ['data']['rocket']['name'] to extract it from the JSON response body.
+#
+# Assert that the country where the rocket was launched is equal to the value in the data source
+# Use ['data']['rocket']['country'] to extract it from the JSON response body.
+query_rocket_parameterized = """
+query getRocketData($id: ID!)
+{
+  rocket(id: $id) {
+    name
+    country
+  }
+}
+"""
