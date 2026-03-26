@@ -1,2 +1,2 @@
 pytest==8.4.2
-requests==2.32.5
+requests==2.33.0
